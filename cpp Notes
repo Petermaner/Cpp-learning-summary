@@ -8,7 +8,8 @@
       getline(cin,a,',')把，作为分隔符
       //////所以当要使用一串数字流时，不建议使用string类
 1.3 当不知道要使用的数组多大时，（动态内存分配？），但是知道结束条件。
-     可以for(i=0;;i++){
+     可以
+	for(i=0;;i++){
    		cin>>a[i];
    		if(a[i]==1000)     //这里要用if 而不是 while？？？
    	                break; //因为while是循环语句，if判断语句，while为真循环，为假执行下一条
@@ -31,119 +32,119 @@
 //大致思路，不能整除2（求余不为0），那个数肯定为0了
                        能整除2（求余不为0），那么肯定一个保底，再看他n/2的因子里有几个2的因子（函数迭代？？），
                                                             用一个while循环（条件为那个因子%2==0），再加一个a++计数器。
-#include<iostream>
-using namespace std;
-int main(){
-	int m,n,a=1;
-	cin>>n;	
-		if(n%2==0){
-			m=n/2;
-			while(m%2==0){
-				a++;
-				m=m/2;
-			} 
-		}
-		if(n%2!=0)
-			a=0;
-	cout<<endl<<a;
-	return 0;
-} 
+	#include<iostream>
+	using namespace std;
+	int main(){
+		int m,n,a=1;
+		cin>>n;	
+			if(n%2==0){
+				m=n/2;
+				while(m%2==0){
+					a++;
+					m=m/2;
+				} 
+			}
+			if(n%2!=0)
+				a=0;
+		cout<<endl<<a;
+		return 0;
+	} 
 
 //上面这个循环＋计数器，可以用for一并表示（注意for循环的可视化运行过程&&for循环的有趣之处）
-for(i=0;n%2==0;i++){
-		n/=2;
-	}
-    cout<<"整数"<<n<<"有"<<i<<"个2的因子。"; 
+	for(i=0;n%2==0;i++){
+			n/=2;
+		}
+	    cout<<"整数"<<n<<"有"<<i<<"个2的因子。"; 
 
 
 4、setw（）和cout.width()区别
 两者作用是一样的，都是设定下一次输出输入宽度，但setw是操作子，而width是成员函数！
 如
-const char *str1 = "hello";
-const char *str2 = "world";
-cout.width(10);
-cout<<str1;
-cout.width(10);
-cout<<str2<<endl;
+	const char *str1 = "hello";
+	const char *str2 = "world";
+	cout.width(10);
+	cout<<str1;
+	cout.width(10);
+	cout<<str2<<endl;
 或者使用：
-cout<<setw(10)<<str1<<setw(10)<<str2<<endl;
+	cout<<setw(10)<<str1<<setw(10)<<str2<<endl;
 显然使用setw要更方便，不过要包含头文件：
-#include <iomanip>
+	#include <iomanip>
 
 5、
 10 20 30 40 50 60 70 80 90 100
 n=55，把55插入进去，100挤掉
 result: 10 20 30 40 50 55 60 70 80 90
-#include<iostream>
-using namespace std;
-int main(){
-	int a[10]={10,20,30,40,50,60,70,80,90,100},i,j,n;
-	cin>>n;
-	for(i=0;i<10;i++){
-		if(a[i]>=n)
-			break;   //定位 i，做个标记（这个地方准备插入）
+	#include<iostream>
+	using namespace std;
+	int main(){
+		int a[10]={10,20,30,40,50,60,70,80,90,100},i,j,n;
+		cin>>n;
+		for(i=0;i<10;i++){
+			if(a[i]>=n)
+				break;   //定位 i，做个标记（这个地方准备插入）
+			}
+		for(j=9;j>i;j--){                      //注意j>i，有点东西，可以举简单例子想出来
+			a[j]=a[j-1];            //把后面的依次后移，倒着写比较好
+			}       
+			a[i]=n;
+		for(i=0;i<10;i++){
+			cout<<a[i]<<'\t';
 		}
-	for(j=9;j>i;j--){                      //注意j>i，有点东西，可以举简单例子想出来
-		a[j]=a[j-1];            //把后面的依次后移，倒着写比较好
-		}       
-		a[i]=n;
-	for(i=0;i<10;i++){
-		cout<<a[i]<<'\t';
-	}
-return 0;
-} 
+	return 0;
+	} 
 6、冒泡算法 6.1
 二分法          6.2
 冒泡算法和二分法一起哦 6.3
 辗转相除求最大公约数法 6.4
 
 6.1
-#include <iostream>
-using namespace std;
-template<typename T>                //模板
-//整数或浮点数皆可使用
-void bubble_sort(T arr[], int len)   //数组做形式参数，用[ ]，因为前面没有声明，要 T
-{
-    int i, j;  T temp;
-    for (i = 0; i < len - 1; i++)         //len-1是因为，最后一位不用和后面的比
-        for (j = 0; j < len - 1 - i; j++)//len-1-i是因为，这种冒泡排序，每次循环都把最大的放在了后面
-        if (arr[j] > arr[j + 1])             //最后一个一定最大。两个for循环，第一个循环每个数（第i个），第二个循环比较                                                  （i和他后面的），最后几个不用比
-        {
-            temp = arr[j];
-            arr[j] = arr[j + 1];
-            arr[j + 1] = temp;
-        }
-}
-int main()
-{
-    int arr[] = { 61, 17, 29, 22, 34, 60, 72, 21, 50, 1, 62 };
-    int len = (int) sizeof(arr) / sizeof(*arr);     ？？？//数组长度可以这么算 ！
-    bubble_sort(arr, len);
-    for (int i = 0; i < len; i++)
-        cout << arr[i] << ' ';
+	#include <iostream>
+	using namespace std;
+	template<typename T>                //模板
+	//整数或浮点数皆可使用
+	void bubble_sort(T arr[], int len)   //数组做形式参数，用[ ]，因为前面没有声明，要 T
+	{
+	    int i, j;  T temp;
+	    for (i = 0; i < len - 1; i++)         //len-1是因为，最后一位不用和后面的比
+		for (j = 0; j < len - 1 - i; j++)//len-1-i是因为，这种冒泡排序，每次循环都把最大的放在了后面
+		if (arr[j] > arr[j + 1])             //最后一个一定最大。两个for循环，第一个循环每个数（第i个），第二个循环比较                                                  （i和他后面的），最后几个不用比
+		{
+		    temp = arr[j];
+		    arr[j] = arr[j + 1];
+		    arr[j + 1] = temp;
+		}
+	}
+	int main()
+	{
+	    int arr[] = { 61, 17, 29, 22, 34, 60, 72, 21, 50, 1, 62 };
+	    int len = (int) sizeof(arr) / sizeof(*arr);     ？？？//数组长度可以这么算 ！
+	    bubble_sort(arr, len);
+	    for (int i = 0; i < len; i++)
+		cout << arr[i] << ' ';
 
-    cout << endl;
+	    cout << endl;
 
-    float arrf[] = { 17.5, 19.1, 0.6, 1.9, 10.5, 12.4, 3.8, 19.7, 1.5, 25.4, 28.6, 4.4, 23.8, 5.4 };
-    len = (int) sizeof(arrf) / sizeof(*arrf);
-    bubble_sort(arrf, len);
-    for (int i = 0; i < len; i++)
-        cout << arrf[i] << ' ';
+	    float arrf[] = { 17.5, 19.1, 0.6, 1.9, 10.5, 12.4, 3.8, 19.7, 1.5, 25.4, 28.6, 4.4, 23.8, 5.4 };
+	    len = (int) sizeof(arrf) / sizeof(*arrf);
+	    bubble_sort(arrf, len);
+	    for (int i = 0; i < len; i++)
+		cout << arrf[i] << ' ';
 
-    return 0;
-}
+	    return 0;
+	}
 6.1.1 数组元素个数确定
 
 sizeof(数组名)与sizeof(*数组名)
 
 举例
-#include<stdio.h>
-int main()
-{
-int a[5]={1,2,3,4,5};
-printf("sizeof数组名=%d\n",sizeof(a));    
-printf("sizeof *数组名=%d\n",sizeof(*a));
-}
+	#include<stdio.h>
+	int main()
+	{
+	int a[5]={1,2,3,4,5};
+	printf("sizeof数组名=%d\n",sizeof(a));    
+	printf("sizeof *数组名=%d\n",sizeof(*a));
+	}
 
 运行结果
 
@@ -161,20 +162,20 @@ a为含有5个元素的数组，数组名代表元素的首地址，所以sizeof
 A、4              B、10              C、40               D、8
 
 我以为正确答案为C，int类型为32位，占四个字节，10个自然就是40了，结果正确答案为A，只是指针p占的空间。
-    #include<iostream>
-    using namespace std;
-    void fun(int *P)
-    {
-    	cout<<"在函数中"<<sizeof(P)<<endl;
-    }
-    int main()
-    {
-    	int A[10];
-    	int* B=new int[10];
-    	cout<<"数组名"<<sizeof(A)<<endl;
-    	cout<<"指针"<<sizeof(B)<<endl;
-    	fun(A);
-    }
+	#include<iostream>
+	using namespace std;
+	void fun(int *P)
+	{
+		cout<<"在函数中"<<sizeof(P)<<endl;
+	}
+	int main()
+	{
+		int A[10];
+		int* B=new int[10];
+		cout<<"数组名"<<sizeof(A)<<endl;
+		cout<<"指针"<<sizeof(B)<<endl;
+		fun(A);
+	}
 
 
 结果输出：
@@ -189,76 +190,76 @@ A、4              B、10              C、40               D、8
 但是数组在作为函数参数传递过程中，会退化成指针。这也是为什么指针作为参数传递时，经常要一个长度。
 
 6.2
-#include<iostream>
-#define N 10
-using namespace std;
-int main()
-{
-     int a[N],front,end,mid,x,i;
-     cout<<"请输入已排好序的a数组元素:"<<endl;
-     for(i=0;i<N;i++)
-              cin>>a[i];
-     cout<<"请输入待查找的数x:"<<endl;
-     cin>>x;
-     front=0;
-     end=N-1;
-     mid=(front+end)/2;
-     while(front<end&&a[mid]!=x)     //可以写front<=end 
-     {
-        if(a[mid]<x)front=mid+1;
-        if(a[mid]>x)end=mid-1;
-        mid=(front+end)/2;
-     }
-     if(a[mid]!=x)
-          cout<<"没找到！"<<endl;
-     else
-          cout<<"找到了，在第"<<mid+1<<"项里"<<endl;
-  return 0;
-}
+	#include<iostream>
+	#define N 10
+	using namespace std;
+	int main()
+	{
+	     int a[N],front,end,mid,x,i;
+	     cout<<"请输入已排好序的a数组元素:"<<endl;
+	     for(i=0;i<N;i++)
+		      cin>>a[i];
+	     cout<<"请输入待查找的数x:"<<endl;
+	     cin>>x;
+	     front=0;
+	     end=N-1;
+	     mid=(front+end)/2;
+	     while(front<end&&a[mid]!=x)     //可以写front<=end 
+	     {
+		if(a[mid]<x)front=mid+1;
+		if(a[mid]>x)end=mid-1;
+		mid=(front+end)/2;
+	     }
+	     if(a[mid]!=x)
+		  cout<<"没找到！"<<endl;
+	     else
+		  cout<<"找到了，在第"<<mid+1<<"项里"<<endl;
+	  return 0;
+	}
 
 6.3
-#include<iostream>
-using namespace std;
-void sort(int a[],int len){
-	for(int i=0;i<len-1;i++){
-		for(int j=0;j<len-1-i;j++){
-			if(a[j]>a[j+1]){
-				int t=a[j];
-				a[j]=a[j+1];
-				a[j+1]=t;
-			} 
+	#include<iostream>
+	using namespace std;
+	void sort(int a[],int len){
+		for(int i=0;i<len-1;i++){
+			for(int j=0;j<len-1-i;j++){
+				if(a[j]>a[j+1]){
+					int t=a[j];
+					a[j]=a[j+1];
+					a[j+1]=t;
+				} 
+			}
 		}
 	}
-}
-int main(){
-	int arr[]={10,30,20,50,100,60,80,70,40,90},n;
-	cout<<"排序前：";
-	for(int i=0;i<10;i++){
-		cout<<arr[i]<<'\t';
+	int main(){
+		int arr[]={10,30,20,50,100,60,80,70,40,90},n;
+		cout<<"排序前：";
+		for(int i=0;i<10;i++){
+			cout<<arr[i]<<'\t';
+		}
+
+		int len=sizeof(arr)/sizeof(*arr);
+		sort(arr,len);
+		cout<<endl<<"排序后：";
+		for(int i=0;i<10;i++){
+			cout<<arr[i]<<'\t';
+		}
+		cout<<endl<<"请输入一个整数：";
+		cin>>n;
+
+		int low=0,high=len-1,mid;
+		while(low<=high){
+			mid=(low+high)/2;
+		if(arr[mid]==n)break;            //
+		if(arr[mid]>n)high=mid-1;    //这三个排比句怎么样？
+		if(arr[mid]<n)low=mid+1;
+		}
+		if(low>high)
+			cout<<"这个数不存在";
+		else
+			cout<<"就是它第"<<mid+1<<"个数！"<<endl;
+		return 0;
 	}
-	
-	int len=sizeof(arr)/sizeof(*arr);
-	sort(arr,len);
-	cout<<endl<<"排序后：";
-	for(int i=0;i<10;i++){
-		cout<<arr[i]<<'\t';
-	}
-	cout<<endl<<"请输入一个整数：";
-	cin>>n;
-	
-	int low=0,high=len-1,mid;
-	while(low<=high){
-		mid=(low+high)/2;
-	if(arr[mid]==n)break;            //
-	if(arr[mid]>n)high=mid-1;    //这三个排比句怎么样？
-	if(arr[mid]<n)low=mid+1;
-	}
-	if(low>high)
-		cout<<"这个数不存在";
-	else
-		cout<<"就是它第"<<mid+1<<"个数！"<<endl;
-	return 0;
-}
 6.4
 
 7
@@ -275,31 +276,31 @@ int main(){
       复制构造函数是用变量初始化变量（a=b）
 10.2
 构造函数的实现：
-Clock::Clock(int newH, int newM, int newS): hour(newH),  minute(newM), second(newS) {
-	}
+	Clock::Clock(int newH, int newM, int newS): hour(newH),  minute(newM), second(newS) {
+		}
 10.3
-#include "iostream.h"
-class A{
-public: int x;
-		A(){};
-              A(A &p){x=p.x;}        //class 类名 {
-                                                             public :
-                                                            类名（形参）；//构造函数
-                                                            类名（const  类名 &对象名）；//复制构造函数
-                                                              ...
-                                                              }；
-                                                            类名::类（ const  类名 &对象名）//复制构造函数的实现
-                                                             {    函数体    }
+	#include "iostream.h"
+	class A{
+	public: int x;
+			A(){};
+		      A(A &p){x=p.x;}        //class 类名 {
+								     public :
+								    类名（形参）；//构造函数
+								    类名（const  类名 &对象名）；//复制构造函数
+								      ...
+								      }；
+								    类名::类（ const  类名 &对象名）//复制构造函数的实现
+								     {    函数体    }
 
-               //A(A &p){x=p.x+200;}
-};
- 
-void main()
-{A a1;
-a1.x=100;
- A a2=a1;
- cout<<a2.x<<endl;
-}
+		       //A(A &p){x=p.x+200;}
+	};
+
+	void main()
+	{A a1;
+	a1.x=100;
+	 A a2=a1;
+	 cout<<a2.x<<endl;
+	}
 
 10.4
 复制构造函数被调用的三种情况
@@ -330,17 +331,17 @@ private:
  void srand(unsigned seed)   功能：函数可以设置 rand 函数所用得到随机数产生算法的种子值。任何大于 1 的种子值都 会将 rand随机数产生函数所产生的虚拟随机数序列重新设置一个起始点。
  int rand(void) 功能：此函数可以产生介于 0 到 32767 间的虚拟随机数，所谓虚拟随机数的意思就是因为 当只设置相同的启动种子值，所产生的数值序列都是可预测的。要产生不可预测的数值序列，必 须通过srand函数不断改变随机数的启始种子值，已产生最佳的随机数。 头文件：stdlib.h 
 
-#include<iostream>
-#include<cstdlib>
-#include <ctime>
-using namespace std;
-int main(){
-	srand((int)time(0));
-	for(int i=0;i<100;i++){
-		cout<<rand()%26<<' ';
-	}
-	return 0;
-} 
+	#include<iostream>
+	#include<cstdlib>
+	#include <ctime>
+	using namespace std;
+	int main(){
+		srand((int)time(0));
+		for(int i=0;i<100;i++){
+			cout<<rand()%26<<' ';
+		}
+		return 0;
+	} 
 13
 file >> c是什么意思？
 文件流是输入输出流。数据在程序中以流的形式出现，
@@ -372,48 +373,48 @@ file >> c;就是从这个文件流里面提取字符c。file << 就是写到文�
 2) 当你需要创建多个类，它们拥有很多相似的成员变量或成员函数时，也可以使用继承。可以将这些类的共同成员提取出来，定义为基类，然后从基类继承，既可以节省代码，也方便后续修改成员。
 
 下面我们定义一个基类 People，然后由此派生出 Student 类：
-#include<iostream>
-using namespace std;
-//基类 Pelple
-class People{
-public:
-    void setname(char *name);
-    void setage(int age);
-    char *getname();
-    int getage();
-private:
-    char *m_name;
-    int m_age;
-};
-void People::setname(char *name){ m_name = name; }
-void People::setage(int age){ m_age = age; }
-char* People::getname(){ return m_name; }
-int People::getage(){ return m_age;}
-//派生类 Student
-class Student: public People{
-public:
-    void setscore(float score);
-    float getscore();
-private:
-    float m_score;
-};
-void Student::setscore(float score){ m_score = score; }
-float Student::getscore(){ return m_score; }
-int main(){
-    Student stu;
-    stu.setname("小明");
-    stu.setage(16);
-    stu.setscore(95.5f);
-    cout<<stu.getname()<<"的年龄是 "<<stu.getage()<<"，成绩是 "<<stu.getscore()<<endl;
-    return 0;
-}
+	#include<iostream>
+	using namespace std;
+	//基类 Pelple
+	class People{
+	public:
+	    void setname(char *name);
+	    void setage(int age);
+	    char *getname();
+	    int getage();
+	private:
+	    char *m_name;
+	    int m_age;
+	};
+	void People::setname(char *name){ m_name = name; }
+	void People::setage(int age){ m_age = age; }
+	char* People::getname(){ return m_name; }
+	int People::getage(){ return m_age;}
+	//派生类 Student
+	class Student: public People{
+	public:
+	    void setscore(float score);
+	    float getscore();
+	private:
+	    float m_score;
+	};
+	void Student::setscore(float score){ m_score = score; }
+	float Student::getscore(){ return m_score; }
+	int main(){
+	    Student stu;
+	    stu.setname("小明");
+	    stu.setage(16);
+	    stu.setscore(95.5f);
+	    cout<<stu.getname()<<"的年龄是 "<<stu.getage()<<"，成绩是 "<<stu.getscore()<<endl;
+	    return 0;
+	}
 运行结果：
 小明的年龄是 16，成绩是 95.5
 
 本例中，People 是基类，Student 是派生类。Student 类继承了 People 类的成员，同时还新增了自己的成员变量 score 和成员函数 setscore()、getscore()。这些继承过来的成员，可以通过子类对象访问，就像自己的一样。
 
 请认真观察代码第21行：
-class Student: public People
+	class Student: public People
 
 这就是声明派生类的语法。class 后面的“Student”是新声明的派生类，冒号后面的“People”是已经存在的基类。在“People”之前有一关键宇 public，用来表示是公有继承。
 
@@ -445,21 +446,21 @@ extra：南苑复习资料
 
 17、
 变量生存期相关问题、、引用传递相关问题（现在可以达到认识，会梳理就好了）
-#include "iostream.h"
-int z=2;
+	#include "iostream.h"
+	int z=2;
 
-void f(int x, int &y)
-{
-   x=x+z;   y=x%z; z++;
-   cout<<x<<'\t'<<y<<'\t'<<z<<endl;
-}
+	void f(int x, int &y)
+	{
+	   x=x+z;   y=x%z; z++;
+	   cout<<x<<'\t'<<y<<'\t'<<z<<endl;
+	}
 
-void main()
-{ int x,y,z;
-  x=3; y=6; z=9;
-  f(x,y); cout<<x<<'\t'<<y<<'\t'<<z<<'\t'<<::z<<endl;
-  f(y,z); cout<<x<<'\t'<<y<<'\t'<<z<<'\t'<<::z<<endl;
-}
+	void main()
+	{ int x,y,z;
+	  x=3; y=6; z=9;
+	  f(x,y); cout<<x<<'\t'<<y<<'\t'<<z<<'\t'<<::z<<endl;
+	  f(y,z); cout<<x<<'\t'<<y<<'\t'<<z<<'\t'<<::z<<endl;
+	}
 输出结果：
 5       1       3
 3       1       9       3
@@ -467,19 +468,19 @@ void main()
 3       1       1       4
 18、
 数组指针，相关
-#include <iostream.h>
-char a[]={"Hello World!"};
+	#include <iostream.h>
+	char a[]={"Hello World!"};
 
-void main()
- {  int i;
-   char *p=a;
-   for(i=0; i<5; i++)
-   {
-     cout<<*p<<'\t'<<p<<endl;
-     p++;
-   }
-   cout<<endl; 
- }
+	void main()
+	 {  int i;
+	   char *p=a;
+	   for(i=0; i<5; i++)
+	   {
+	     cout<<*p<<'\t'<<p<<endl;
+	     p++;
+	   }
+	   cout<<endl; 
+	 }
 输出结果：
 H       Hello World!
 e       ello World!
@@ -495,22 +496,22 @@ o       o World!
 
 5	6	7	8	9	1	2	3	4
 
-#include  <iostream.h>
-const int  MAX=100; 
-void main()
- { int a[MAX],m,n,i,j,temp;
-    cin>>m>>n;
-     for (i=0; i<m+n; i++)     
-        cin>>     （1）    ;   //读入数组元素值                               
-     for (i=     （2）    ; i>=0; i--)                            
-     {
-        temp=     （3）    ; 
-        for (j=0; j<n; j++)           （4）    ;
-         a[i+n]=     （5）    ;
-      }
-      for (i=0; i<m+n; i++)    cout<<a[i]<<' ';
-       cout<<endl;
-  }
+	#include  <iostream.h>
+	const int  MAX=100; 
+	void main()
+	 { int a[MAX],m,n,i,j,temp;
+	    cin>>m>>n;
+	     for (i=0; i<m+n; i++)     
+		cin>>     （1）    ;   //读入数组元素值                               
+	     for (i=     （2）    ; i>=0; i--)                            
+	     {
+		temp=     （3）    ; 
+		for (j=0; j<n; j++)           （4）    ;
+		 a[i+n]=     （5）    ;
+	      }
+	      for (i=0; i<m+n; i++)    cout<<a[i]<<' ';
+	       cout<<endl;
+	  }
 
 算法：基础：1 两个数交换
                     2 for循环，数组【？】下标问题
