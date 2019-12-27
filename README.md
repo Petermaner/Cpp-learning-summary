@@ -1,4 +1,7 @@
 # -
 C++学习中的一些总结
-1.如何判断一个数是否为质数
-2.如何求两个数的最大公约数
+cpp Notes 部分为复习过程中的C++笔记
+Commit log：
+2019/xx/xx  creak this repository
+2019/12/27  creat cpp Notes
+xxxx/xx/xx  change the format to markdown
