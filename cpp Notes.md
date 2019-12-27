@@ -1,149 +1,165 @@
-#markdown loaing... (in row 143)  
+#markdown loaing... (in row 279)  
 1、字符串相关问题  
 1.1输入，输出想要的字符串（不定个数的）   
-方法一：字符数组 char  a[20]  cin>>a;  cout<<a;(输入过程中按回车及停止)   
-方法二：string类  string  a;  getline(cin,a); (输入过程中按回车及停止)   
-1.2 string类 cin>>a时，是把空格当作分隔符，作为字符串a，空格后的当作下一次输入   
-	getline(cin，a)不包括空格，回车作为分隔符，这样的话，a中将包括空格！    
-	getline(cin,a,',')把，作为分隔符   
-      //////所以当要使用一串数字流时，不建议使用string类   
+方法一：字符数组```char  a[20]  cin>>a;  cout<<a;(输入过程中按回车及停止)```   
+方法二：string类```string  a;  getline(cin,a); (输入过程中按回车及停止)```  
+1.2 string类 ```cin>>a```时，是把空格当作分隔符，作为字符串a，空格后的当作下一次输入   
+```cpp
+getline(cin，a)不包括空格，回车作为分隔符，这样的话，a中将包括空格！    
+getline(cin,a,',')把，作为分隔符
+```
+所以当要使用一串数字流时，不建议使用string类   
 1.3 当不知道要使用的数组多大时，（动态内存分配？），但是知道结束条件。     
-     可以   
-	for(i=0;;i++){
-		cin>>a[i];
-	if(a[i]==1000)     //这里要用if 而不是 while？？？
-		break; //因为while是循环语句，if判断语句，while为真循环，为假执行下一条
-	}
-	for(i=0;a[i]!=1000;i++){
-		if(a[i]==-1)
-			x++;
-		if(a[i]==0)
-			b++;
-		if(a[i]==1)
-		c++;
-	}
+     可以
+```cpp
+for(i=0;;i++){
+	cin>>a[i];
+if(a[i]==1000)     //这里要用if 而不是 while？？？
+	break; //因为while是循环语句，if判断语句，while为真循环，为假执行下一条
+}
+for(i=0;a[i]!=1000;i++){
+	if(a[i]==-1)
+		x++;
+	if(a[i]==0)
+		b++;
+	if(a[i]==1)
+	c++;
+}
+```
 1.4  在while和for循环中的 ++i 和 i++ 是没有区别的。！！！     
 
 2、闰年闰月 2月正常有28天，闰年2月有29天。   
-     四年一闰，百年不闰，四百年又闰。     
-	（n%4==0 && n%100!=0 || n%400==0
-	if（month==1||3||5||...）是错误的，要写if(month==1||month==3||month==5)
+   四年一闰，百年不闰，四百年又闰。     
+```cpp
+（n%4==0 && n%100!=0 || n%400==0
+if（month==1||3||5||...）是错误的，要写if(month==1||month==3||month==5)
+```
 3、一个自然数有多少个2的因子   
 //大致思路，不能整除2（求余不为0），那个数肯定为0了 ,能整除2（求余不为0），那么肯定一个保底，再看他n/2的因子里有几个2的因子（函数迭代？？）,   
 用一个while循环（条件为那个因子%2==0），再加一个a++计数器。      
-	#include<iostream>
-	using namespace std;
-	int main(){
-		int m,n,a=1;
-		cin>>n;	
-			if(n%2==0){
-				m=n/2;
-				while(m%2==0){
-					a++;
-					m=m/2;
-				} 
-			}
-			if(n%2!=0)
-				a=0;
-		cout<<endl<<a;
-		return 0;
-	} 
-
+```cpp
+#include<iostream>
+using namespace std;
+int main(){
+	int m,n,a=1;
+	cin>>n;	
+	if(n%2==0){
+		m=n/2;
+		while(m%2==0){
+			a++;
+			m=m/2;
+		} 
+	}
+	if(n%2!=0)
+		a=0;
+	cout<<endl<<a;
+	return 0;
+} 
+```
 //上面这个循环＋计数器，可以用for一并表示（注意for循环的可视化运行过程&&for循环的有趣之处）    
-	for(i=0;n%2==0;i++){
-			n/=2;
-		}
-	    cout<<"整数"<<n<<"有"<<i<<"个2的因子。"; 
-
+```cpp
+for(i=0;n%2==0;i++){
+	n/=2;
+}
+cout<<"整数"<<n<<"有"<<i<<"个2的因子。"; 
+```
 
 4、setw（）和cout.width()区别    
 两者作用是一样的，都是设定下一次输出输入宽度，但setw是操作子，而width是成员函数！    
-如    
-	const char *str1 = "hello";
-	const char *str2 = "world";
-	cout.width(10);
-	cout<<str1;
-	cout.width(10);
-	cout<<str2<<endl;
+如 
+```cpp
+const char *str1 = "hello";
+const char *str2 = "world";
+cout.width(10);
+cout<<str1;
+cout.width(10);
+cout<<str2<<endl;
+```
 或者使用：    
-	cout<<setw(10)<<str1<<setw(10)<<str2<<endl;
+```cout<<setw(10)<<str1<<setw(10)<<str2<<endl;```
 显然使用setw要更方便，不过要包含头文件：    
-	#include <iomanip>
+```#include <iomanip>```
 
 5、  
 10 20 30 40 50 60 70 80 90 100    
 n=55，把55插入进去，100挤掉   
-result: 10 20 30 40 50 55 60 70 80 90   
-	#include<iostream>
-	using namespace std;
-	int main(){
-		int a[10]={10,20,30,40,50,60,70,80,90,100},i,j,n;
-		cin>>n;
-		for(i=0;i<10;i++){
-			if(a[i]>=n)
-				break;   //定位 i，做个标记（这个地方准备插入）
-			}
-		for(j=9;j>i;j--){                      //注意j>i，有点东西，可以举简单例子想出来
-			a[j]=a[j-1];            //把后面的依次后移，倒着写比较好
-			}       
-			a[i]=n;
-		for(i=0;i<10;i++){
-			cout<<a[i]<<'\t';
+result: 10 20 30 40 50 55 60 70 80 90  
+```cpp
+#include<iostream>
+using namespace std;
+int main(){
+	int a[10]={10,20,30,40,50,60,70,80,90,100},i,j,n;
+	cin>>n;
+	for(i=0;i<10;i++){
+		if(a[i]>=n)
+			break;   //定位 i，做个标记（这个地方准备插入）
 		}
-	return 0;
-	} 
+	for(j=9;j>i;j--){                      //注意j>i，有点东西，可以举简单例子想出来
+		a[j]=a[j-1];            //把后面的依次后移，倒着写比较好
+		}       
+		a[i]=n;
+	for(i=0;i<10;i++){
+		cout<<a[i]<<'\t';
+	}
+return 0;
+} 
+```
 6、冒泡算法 6.1   
 二分法          6.2   
 冒泡算法和二分法一起哦 6.3   
 辗转相除求最大公约数法 6.4    
     
 6.1   
-	#include <iostream>
-	using namespace std;
-	template<typename T>                //模板
-	//整数或浮点数皆可使用
-	void bubble_sort(T arr[], int len)   //数组做形式参数，用[ ]，因为前面没有声明，要 T
+```cpp
+#include <iostream>
+using namespace std;
+template<typename T>                //模板
+//整数或浮点数皆可使用
+void bubble_sort(T arr[], int len)   //数组做形式参数，用[ ]，因为前面没有声明，要 T
+{
+    int i, j;  T temp;
+    for (i = 0; i < len - 1; i++)         //len-1是因为，最后一位不用和后面的比
+	for (j = 0; j < len - 1 - i; j++)//len-1-i是因为，这种冒泡排序，每次循环都把最大的放在了后面
+	if (arr[j] > arr[j + 1])             //最后一个一定最大。两个for循环，第一个循环每个数（第i个），第二个循环比较                                                  （i和他后面的），最后几个不用比
 	{
-	    int i, j;  T temp;
-	    for (i = 0; i < len - 1; i++)         //len-1是因为，最后一位不用和后面的比
-		for (j = 0; j < len - 1 - i; j++)//len-1-i是因为，这种冒泡排序，每次循环都把最大的放在了后面
-		if (arr[j] > arr[j + 1])             //最后一个一定最大。两个for循环，第一个循环每个数（第i个），第二个循环比较                                                  （i和他后面的），最后几个不用比
-		{
-		    temp = arr[j];
-		    arr[j] = arr[j + 1];
-		    arr[j + 1] = temp;
-		}
+	    temp = arr[j];
+	    arr[j] = arr[j + 1];
+	    arr[j + 1] = temp;
 	}
-	int main()
-	{
-	    int arr[] = { 61, 17, 29, 22, 34, 60, 72, 21, 50, 1, 62 };
-	    int len = (int) sizeof(arr) / sizeof(*arr);     ？？？//数组长度可以这么算 ！
-	    bubble_sort(arr, len);
-	    for (int i = 0; i < len; i++)
-		cout << arr[i] << ' ';
+}
+int main()
+{
+    int arr[] = { 61, 17, 29, 22, 34, 60, 72, 21, 50, 1, 62 };
+    int len = (int) sizeof(arr) / sizeof(*arr);     ？？？//数组长度可以这么算 ！
+    bubble_sort(arr, len);
+    for (int i = 0; i < len; i++)
+	cout << arr[i] << ' ';
 
-	    cout << endl;
+    cout << endl;
 
-	    float arrf[] = { 17.5, 19.1, 0.6, 1.9, 10.5, 12.4, 3.8, 19.7, 1.5, 25.4, 28.6, 4.4, 23.8, 5.4 };
-	    len = (int) sizeof(arrf) / sizeof(*arrf);
-	    bubble_sort(arrf, len);
-	    for (int i = 0; i < len; i++)
-		cout << arrf[i] << ' ';
+    float arrf[] = { 17.5, 19.1, 0.6, 1.9, 10.5, 12.4, 3.8, 19.7, 1.5, 25.4, 28.6, 4.4, 23.8, 5.4 };
+    len = (int) sizeof(arrf) / sizeof(*arrf);
+    bubble_sort(arrf, len);
+    for (int i = 0; i < len; i++)
+	cout << arrf[i] << ' ';
 
-	    return 0;
-	}
+    return 0;
+}
+```
 6.1.1 数组元素个数确定    
 
 sizeof(数组名)与sizeof(*数组名)    
 
-举例    
-	#include<stdio.h>
-	int main()
-	{
-	int a[5]={1,2,3,4,5};
-	printf("sizeof数组名=%d\n",sizeof(a));    
-	printf("sizeof *数组名=%d\n",sizeof(*a));
-	}
+举例  
+```cpp
+#include<stdio.h>
+int main()
+{
+int a[5]={1,2,3,4,5};
+printf("sizeof数组名=%d\n",sizeof(a));    
+printf("sizeof *数组名=%d\n",sizeof(*a));
+}
+```
 
 运行结果      
 
@@ -161,20 +177,22 @@ a为含有5个元素的数组，数组名代表元素的首地址，所以sizeof
 A、4              B、10              C、40               D、8   
 
 我以为正确答案为C，int类型为32位，占四个字节，10个自然就是40了，结果正确答案为A，只是指针p占的空间。     
-	#include<iostream>
-	using namespace std;
-	void fun(int *P)
-	{
-		cout<<"在函数中"<<sizeof(P)<<endl;
-	}
-	int main()
-	{
-		int A[10];
-		int* B=new int[10];
-		cout<<"数组名"<<sizeof(A)<<endl;
-		cout<<"指针"<<sizeof(B)<<endl;
-		fun(A);
-	}
+```cpp
+#include<iostream>
+using namespace std;
+void fun(int *P)
+{
+	cout<<"在函数中"<<sizeof(P)<<endl;
+}
+int main()
+{
+	int A[10];
+	int* B=new int[10];
+	cout<<"数组名"<<sizeof(A)<<endl;
+	cout<<"指针"<<sizeof(B)<<endl;
+	fun(A);
+}
+```
 
 
 结果输出：   
@@ -188,73 +206,77 @@ A、4              B、10              C、40               D、8
 
 但是数组在作为函数参数传递过程中，会退化成指针。这也是为什么指针作为参数传递时，经常要一个长度。   
 
-6.2    
-	#include<iostream>
-	#define N 10
-	using namespace std;
-	int main(){
-	int a[N],front,end,mid,x,i;
-	cout<<"请输入已排好序的a数组元素:"<<endl;
-	for(i=0;i<N;i++)
-		cin>>a[i];
-	cout<<"请输入待查找的数x:"<<endl;
-	cin>>x;
-	front=0;
-	end=N-1;
+6.2 
+```cpp
+#include<iostream>
+#define N 10
+using namespace std;
+int main(){
+int a[N],front,end,mid,x,i;
+cout<<"请输入已排好序的a数组元素:"<<endl;
+for(i=0;i<N;i++)
+	cin>>a[i];
+cout<<"请输入待查找的数x:"<<endl;
+cin>>x;
+front=0;
+end=N-1;
+mid=(front+end)/2;
+while(front<end&&a[mid]!=x){     //可以写front<=end
+	if(a[mid]<x)front=mid+1;
+	if(a[mid]>x)end=mid-1;
 	mid=(front+end)/2;
-	while(front<end&&a[mid]!=x){     //可以写front<=end
-		if(a[mid]<x)front=mid+1;
-		if(a[mid]>x)end=mid-1;
-		mid=(front+end)/2;
-	}
-	if(a[mid]!=x)
-		cout<<"没找到！"<<endl;
-	else
-		cout<<"找到了，在第"<<mid+1<<"项里"<<endl;
-	return 0;
-	}
+}
+if(a[mid]!=x)
+	cout<<"没找到！"<<endl;
+else
+	cout<<"找到了，在第"<<mid+1<<"项里"<<endl;
+return 0;
+}
+```
 
-6.3   
-	#include<iostream>
-	using namespace std;
-	void sort(int a[],int len){
-		for(int i=0;i<len-1;i++){
-			for(int j=0;j<len-1-i;j++){
-				if(a[j]>a[j+1]){
-					int t=a[j];
-					a[j]=a[j+1];
-					a[j+1]=t;
-				} 
-			}
-		}
+6.3  
+```cpp
+#include<iostream>
+using namespace std;
+void sort(int a[],int len){
+	for(int i=0;i<len-1;i++){
+	for(int j=0;j<len-1-i;j++){
+		if(a[j]>a[j+1]){
+			int t=a[j];
+			a[j]=a[j+1];
+			a[j+1]=t;
+		} 
 	}
-	int main(){
-	int arr[]={10,30,20,50,100,60,80,70,40,90},n;
-	cout<<"排序前：";
-	for(int i=0;i<10;i++){
-		cout<<arr[i]<<'\t';
-	}
-	int len=sizeof(arr)/sizeof(*arr);
-	sort(arr,len);
-	cout<<endl<<"排序后：";
-	for(int i=0;i<10;i++){
-		cout<<arr[i]<<'\t';
-	}
-	cout<<endl<<"请输入一个整数：";
-	cin>>n;
-	int low=0,high=len-1,mid;
-	while(low<=high){
-	mid=(low+high)/2;
-	if(arr[mid]==n)break;            //
-	if(arr[mid]>n)high=mid-1;    //这三个排比句怎么样？
-	if(arr[mid]<n)low=mid+1;
-	}
-	if(low>high)
-		cout<<"这个数不存在";
-	else
-		cout<<"就是它第"<<mid+1<<"个数！"<<endl;
-	return 0;
-	}
+}
+}
+int main(){
+int arr[]={10,30,20,50,100,60,80,70,40,90},n;
+cout<<"排序前：";
+for(int i=0;i<10;i++){
+cout<<arr[i]<<'\t';
+}
+int len=sizeof(arr)/sizeof(*arr);
+sort(arr,len);
+cout<<endl<<"排序后：";
+for(int i=0;i<10;i++){
+cout<<arr[i]<<'\t';
+}
+cout<<endl<<"请输入一个整数：";
+cin>>n;
+int low=0,high=len-1,mid;
+while(low<=high){
+mid=(low+high)/2;
+if(arr[mid]==n)break;            //
+if(arr[mid]>n)high=mid-1;    //这三个排比句怎么样？
+if(arr[mid]<n)low=mid+1;
+}
+if(low>high)
+cout<<"这个数不存在";
+else
+cout<<"就是它第"<<mid+1<<"个数！"<<endl;
+return 0;
+}
+```
 6.4    
 
 7   
