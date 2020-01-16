@@ -295,30 +295,31 @@ return 0;
 构造函数的实现：   
 	Clock::Clock(int newH, int newM, int newS): hour(newH),  minute(newM), second(newS) {
 		}
-10.3    
-	#include "iostream.h"
-	class A{
-	public: int x;
-		A(){};
-		 A(A &p){x=p.x;}        //class 类名 {
-	public :
-		类名（形参）；//构造函数
-		类名（const  类名 &对象名）；//复制构造函数
-		 ...
-		 }；
-		类名::类（ const  类名 &对象名）//复制构造函数的实现
-		{    函数体    }
+10.3  
+```cpp
+#include "iostream.h"
+class A{
+public: int x;
+	A(){};
+	 A(A &p){x=p.x;}        //class 类名 {
+public :
+	类名（形参）；//构造函数
+	类名（const  类名 &对象名）；//复制构造函数
+	 ...
+	 }；
+	类名::类（ const  类名 &对象名）//复制构造函数的实现
+	{    函数体    }
 
-		 //A(A &p){x=p.x+200;}
-	};
+	 //A(A &p){x=p.x+200;}
+};
 
-	void main()
-	{A a1;
-	a1.x=100;
-	 A a2=a1;
-	 cout<<a2.x<<endl;
-	}
- 
+void main()
+{A a1;
+a1.x=100;
+ A a2=a1;
+ cout<<a2.x<<endl;
+}
+```
 10.4   
 复制构造函数被调用的三种情况   
 定义一个对象时，以本类另一个对象作为初始值，发生复制构造；   
@@ -331,14 +332,16 @@ return 0;
 与类的唯一区别：类的缺省访问权限是private，结构体的缺省访问权限是public    
 结构体存在的主要原因：与C语言保持兼容   
 11.2  联合体    
-声明形式   
-	union 联合体名称 {
-	    公有成员
-	protected:
-	    保护型成员
-	private:
-	    私有成员
-	};
+声明形式 
+```cpp
+union 联合体名称 {
+    公有成员
+protected:
+    保护型成员
+private:
+    私有成员
+};
+```
 特点：   
 成员共用相同的内存单元   
 任何两个成员不会同时有效    
@@ -347,18 +350,19 @@ return 0;
 注：C++随机数函数有：     
  void srand(unsigned seed)   功能：函数可以设置 rand 函数所用得到随机数产生算法的种子值。任何大于 1 的种子值都 会将 rand随机数产生函数所产生的虚拟随机数序列重新设置一个起始点。     
  int rand(void) 功能：此函数可以产生介于 0 到 32767 间的虚拟随机数，所谓虚拟随机数的意思就是因为 当只设置相同的启动种子值，所产生的数值序列都是可预测的。要产生不可预测的数值序列，必 须通过srand函数不断改变随机数的启始种子值，已产生最佳的随机数。 头文件：stdlib.h     
-
-	#include<iostream>
-	#include<cstdlib>
-	#include <ctime>
-	using namespace std;
-	int main(){
-		srand((int)time(0));
-		for(int i=0;i<100;i++){
-			cout<<rand()%26<<' ';
-		}
-		return 0;
-	} 
+```cpp
+#include<iostream>
+#include<cstdlib>
+#include <ctime>
+using namespace std;
+int main(){
+	srand((int)time(0));
+	for(int i=0;i<100;i++){
+		cout<<rand()%26<<' ';
+	}
+	return 0;
+} 
+```
 13    
 file >> c是什么意思？    
 文件流是输入输出流。数据在程序中以流的形式出现，    
@@ -389,42 +393,44 @@ file >> c;就是从这个文件流里面提取字符c。file << 就是写到文�
 
 2) 当你需要创建多个类，它们拥有很多相似的成员变量或成员函数时，也可以使用继承。可以将这些类的共同成员提取出来，定义为基类，然后从基类继承，既可以节省代码，也方便后续修改成员。    
 
-下面我们定义一个基类 People，然后由此派生出 Student 类：    
-	#include<iostream>
-	using namespace std;
-	//基类 Pelple
-	class People{
-	public:
-	    void setname(char *name);
-	    void setage(int age);
-	    char *getname();
-	    int getage();
-	private:
-	    char *m_name;
-	    int m_age;
-	};
-	void People::setname(char *name){ m_name = name; }
-	void People::setage(int age){ m_age = age; }
-	char* People::getname(){ return m_name; }
-	int People::getage(){ return m_age;}
-	//派生类 Student
-	class Student: public People{
-	public:
-	    void setscore(float score);
-	    float getscore();
-	private:
-	    float m_score;
-	};
-	void Student::setscore(float score){ m_score = score; }
-	float Student::getscore(){ return m_score; }
-	int main(){
-	    Student stu;
-	    stu.setname("小明");
-	    stu.setage(16);
-	    stu.setscore(95.5f);
-	    cout<<stu.getname()<<"的年龄是 "<<stu.getage()<<"，成绩是 "<<stu.getscore()<<endl;
-	    return 0;
-	}
+下面我们定义一个基类 People，然后由此派生出 Student 类： 
+```cpp
+#include<iostream>
+using namespace std;
+//基类 Pelple
+class People{
+public:
+    void setname(char *name);
+    void setage(int age);
+    char *getname();
+    int getage();
+private:
+    char *m_name;
+    int m_age;
+};
+void People::setname(char *name){ m_name = name; }
+void People::setage(int age){ m_age = age; }
+char* People::getname(){ return m_name; }
+int People::getage(){ return m_age;}
+//派生类 Student
+class Student: public People{
+public:
+    void setscore(float score);
+    float getscore();
+private:
+    float m_score;
+};
+void Student::setscore(float score){ m_score = score; }
+float Student::getscore(){ return m_score; }
+int main(){
+    Student stu;
+    stu.setname("小明");
+    stu.setage(16);
+    stu.setscore(95.5f);
+    cout<<stu.getname()<<"的年龄是 "<<stu.getage()<<"，成绩是 "<<stu.getscore()<<endl;
+    return 0;
+}
+```
 运行结果：   
 小明的年龄是 16，成绩是 95.5   
 
@@ -462,22 +468,24 @@ extra：南苑复习资料
 算法为先，写法为后   
 
 17、   
-变量生存期相关问题、、引用传递相关问题（现在可以达到认识，会梳理就好了）    
-	#include "iostream.h"
-	int z=2;
+变量生存期相关问题、、引用传递相关问题（现在可以达到认识，会梳理就好了）  
+```cpp
+#include "iostream.h"
+int z=2;
 
-	void f(int x, int &y)
-	{
-	   x=x+z;   y=x%z; z++;
-	   cout<<x<<'\t'<<y<<'\t'<<z<<endl;
-	}
+void f(int x, int &y)
+{
+   x=x+z;   y=x%z; z++;
+   cout<<x<<'\t'<<y<<'\t'<<z<<endl;
+}
 
-	void main()
-	{ int x,y,z;
-	  x=3; y=6; z=9;
-	  f(x,y); cout<<x<<'\t'<<y<<'\t'<<z<<'\t'<<::z<<endl;
-	  f(y,z); cout<<x<<'\t'<<y<<'\t'<<z<<'\t'<<::z<<endl;
-	}
+void main()
+{ int x,y,z;
+  x=3; y=6; z=9;
+  f(x,y); cout<<x<<'\t'<<y<<'\t'<<z<<'\t'<<::z<<endl;
+  f(y,z); cout<<x<<'\t'<<y<<'\t'<<z<<'\t'<<::z<<endl;
+}
+```
 输出结果：   
 5       1       3  
 3       1       9       3   
@@ -485,18 +493,20 @@ extra：南苑复习资料
 3       1       1       4   
 18、  
 数组指针，相关    
-	#include <iostream.h>
-	char a[]={"Hello World!"};
+```cpp
+#include <iostream.h>
+char a[]={"Hello World!"};
 
-	void main(){
-	int i;
-	char *p=a;
-	for(i=0; i<5; i++){
-	     cout<<*p<<'\t'<<p<<endl;
-	     p++;
-	}
-	cout<<endl; 
-	} 
+void main(){
+int i;
+char *p=a;
+for(i=0; i<5; i++){
+     cout<<*p<<'\t'<<p<<endl;
+     p++;
+}
+cout<<endl; 
+} 
+```
 输出结果：  
 H       Hello World!  
 e       ello World!   
@@ -511,23 +521,24 @@ o       o World!
 设m=4，n=5，则程序运行后，数组内容为    
 
 5	6	7	8	9	1	2	3	4     
-
-	#include  <iostream.h>
-	const int  MAX=100; 
-	void main()
-	 { int a[MAX],m,n,i,j,temp;
-	    cin>>m>>n;
-	     for (i=0; i<m+n; i++)     
-		cin>>     （1）    ;   //读入数组元素值                               
-	     for (i=     （2）    ; i>=0; i--)                            
-	     {
-		temp=     （3）    ; 
-		for (j=0; j<n; j++)           （4）    ;
-		 a[i+n]=     （5）    ;
-	      }
-	      for (i=0; i<m+n; i++)    cout<<a[i]<<' ';
-	       cout<<endl;
-	  }
+```cpp
+#include  <iostream.h>
+const int  MAX=100; 
+void main()
+ { int a[MAX],m,n,i,j,temp;
+    cin>>m>>n;
+     for (i=0; i<m+n; i++)     
+	cin>>     （1）    ;   //读入数组元素值                               
+     for (i=     （2）    ; i>=0; i--)                            
+     {
+	temp=     （3）    ; 
+	for (j=0; j<n; j++)           （4）    ;
+	 a[i+n]=     （5）    ;
+      }
+      for (i=0; i<m+n; i++)    cout<<a[i]<<' ';
+       cout<<endl;
+  }
+```
 
 算法：基础：1 两个数交换    
            2 for循环，数组【？】下标问题    
@@ -535,4 +546,91 @@ o       o World!
           解析：这样想是因为，（3）处temp是临时的意思，推断为中间变量（题目也有提示）   
                     （3）和（5）两个操作配合（2）把4，3，2，1分别放到位置【9】【8】【7】【6】，都是9/8/7/6/5，怎么办呢？这个时候发现（4）中循环次数为n次（5次），所有有循环往前迭代的想法，至此此题结束。    
           费曼学习法：    
-          升华：填空题是带着镣铐跳舞，一个问题可以有许多不同的算法，但是普遍人的算法（出题人的算法要搞清楚），通过空格周围的条件，本格推理。     
+          升华：填空题是带着镣铐跳舞，一个问题可以有许多不同的算法，但是普遍人的算法（出题人的算法要搞清楚），通过空格周围的条件，本格推理。 
+	  
+
+猫南北  借鉴        
+编程题主要考点: 构造（拷贝）函数写法，组合类构造函数(子类)，字符串的处理方法，重载函数的写法(课件里例子要熟练掌握)，类的静态成员的使用方法，带指针成员的类的深拷贝，动态内存申请与释放等...        
+
+20、    
+```cpp
+int a;
+
+void test ()
+{
+  int a = ::a;//用全局变量a，给本地变量a赋值
+}
+```
+21、   
+*在定义时是指针  ，在运算时是解析   
+&在定义时是引用，在运算时是取地址   
+22、   
+文件输入输出流   
+```cpp
+#include<fstream> //头文件 包括 ofstream（输出东西到txt文件里）  infstream（从文件里拿东西)
+#include<iomanip>
+using namespace std;
+
+void main()
+{ 	
+	int x,y,z;
+	 ofstream abc("myfile.txt");  //打开文件
+               //还可以这样写  ofstream abc;    想起什么名字都行
+                                        abc.open("myfile.txt");
+	abc<<"   公鸡      母鸡      小鸡"<<endl;
+	for(x=0; x<=20; x++)
+	   for(y=0; y<=33; y++){
+		z=100-x-y;
+		if(5*x+3*y+z/3==100)		
+		   abc<<setw(6)<<x<<setw(10)<<y<<setw(10)<<z<<endl; //写入文件
+	   }
+	abc.close(); //关闭文件   
+}
+```
+23、某道题     
+17.?编写程序，输出如下序列的前50项，此序列的第一项为0；第二项为1；以后的奇数项为其前两项之和；偶数项为其前两项之差。要求每行输出10个数。?      
+答案写法：   
+```cpp
+#include"stdio.h"
+void?main(){
+int i,a=0,b=1,c,m=-1;
+printf("%7d%7d",a,b);
+for(i=3;i<=50;i++){
+m=-m;  c=b+m*a;???
+printf("%7d",c);?
+if(i%10==0)????
+printf("\n");?
+a=b;???b=c;?
+}
+printf("\n");?
+}
+```
+我的写法：  
+```cpp
+#include<iostream>
+using namespace std;
+int main() {
+	int a[50],i;
+	a[0] = 0;
+	a[1] = 1;
+	for (i = 2; i < 50; i++) {
+		int t = i % 2;
+		switch (t)
+		{
+		case 0:
+			a[i] = a[i - 1] + a[i - 2]; break;
+		case 1:
+			a[i] = a[i - 2] - a[i - 1]; break;
+        default:{}
+			break;
+		}
+	}
+	for (i = 0; i < 50; i++) {
+		cout << a[i]<<' ';
+		if ((i + 1) % 10 == 0)
+			cout << endl;
+	}
+
+	return 0;
+}
+```
